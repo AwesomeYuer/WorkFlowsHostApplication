@@ -177,14 +177,14 @@ namespace Microshaoft
                                             );
             var activity =
                     ActivityXamlServices
-                                        .Load
-                                            (
-                                                xamlReader
-                                                , new ActivityXamlServicesSettings()
-                                                    {
-                                                        CompileExpressions = true
-                                                    }
-                                            );
+                                    .Load
+                                        (
+                                            xamlReader
+                                            , new ActivityXamlServicesSettings()
+                                                {
+                                                    CompileExpressions = true
+                                                }
+                                        );
             if
                 (
                     TryGetCompiledResultType

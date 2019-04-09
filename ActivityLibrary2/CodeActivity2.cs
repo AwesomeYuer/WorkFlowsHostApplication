@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Activities;
-
-namespace ActivityLibrary2
+﻿namespace ActivityLibrary2
 {
+    using System;
+    using System.Activities;
     public sealed class CodeActivity2 : CodeActivity
     {
         // Define an activity input argument of type string

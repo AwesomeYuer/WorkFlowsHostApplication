@@ -6,6 +6,7 @@ using Microshaoft;
 using System.Collections.Generic;
 using System.Threading;
 using System.Activities.Tracking;
+using System.Threading.Tasks;
 
 namespace WorkflowConsoleApplication
 {
@@ -156,19 +157,29 @@ namespace WorkflowConsoleApplication
 
 ";
 
-
-
-
-
-
-
-
-
-
-
         static void Main(string[] args)
         {
-           
+            System.Threading.Tasks
+                .Parallel
+                    .For
+                        (
+                            1
+                            , 100
+                            , new ParallelOptions()
+                            {
+                                MaxDegreeOfParallelism = 8
+                            }
+                            , (x) =>
+                            {
+                                ProcessOnce(x);
+                            }
+                        );
+
+            Console.ReadLine();
+        }
+        static void ProcessOnce(int i)
+        {
+            Console.WriteLine(i);
 
             //WorkflowApplication wfApp =
             //    new WorkflowApplication(new FlowchartNumberGuessWorkflow(), inputs);
@@ -186,6 +197,7 @@ namespace WorkflowConsoleApplication
                                             _xaml;
                                     }
                                 );
+
             wfApp.Completed = (e) =>
             {
                 
@@ -306,7 +318,7 @@ namespace WorkflowConsoleApplication
             //        }
             //    }
             //}
-            Console.ReadLine();
+           
         }
     }
 }

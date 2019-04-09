@@ -1,6 +1,4 @@
-﻿
-
-namespace ActivityLibrary1
+﻿namespace ActivityLibrary1
 {
     using System;
     using System.Activities;
