@@ -8,53 +8,41 @@
 /r:"D:\Microshaoft.Nuget.Packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll"
 */
 
-    
+
 namespace Microshaoft
 {
     using Newtonsoft.Json.Linq;
     using System;
     using System.Activities;
+    using System.Activities.Expressions;
     using System.Activities.Tracking;
     using System.Activities.XamlIntegration;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
+    using System.Runtime.DurableInstancing;
     using System.Xaml;
     using System.Xml;
-    using System.Runtime.DurableInstancing;
-    using System.Activities.Expressions;
-    using System.Collections.Concurrent;
 
     public static class WorkFlowHelper
     {
+        private class WorkFlowDefinition
+        {
+            public string ID;
+            public Activity Activity;
+            public Type Type;
+            public DateTime CompiledTime;
+
+        }
+
 
         #region Member
         /// <summary>
         /// Compiled Expressions Type Cache
         /// </summary>
-        private static ConcurrentDictionary
-                            <
-                                string
-                                ,
-                                    (
-                                        string WorkFlowID
-                                        , Activity WorkFlowActivity
-                                        , Type WorkFlowType
-                                        , DateTime CompiledTime
-                                    )
-                            > _cache = new ConcurrentDictionary
-                                                <
-                                                    string
-                                                    ,
-                                                        (
-                                                            string WorkFlowID
-                                                            , Activity WorkFlowActivity
-                                                            , Type WorkFlowType
-                                                            , DateTime CompiledTime
-                                                        )
-                                                >();
-        /// <summary>
+        private static ConcurrentDictionary<string, WorkFlowDefinition>
+                        _cache = new ConcurrentDictionary<string, WorkFlowDefinition>();
         /// Object for lock, make one Expressions Type only be compiled once
         /// </summary>
         private static object _locker = new object();
@@ -62,22 +50,22 @@ namespace Microshaoft
 
         public static WorkflowApplication CreateWorkflowApplication
                                             (
-                                                string workFlowID
+                                                string definitionID
                                                 , Func<string> getDefinitionXamlProcessFunc
                                                 //, string localAssemblyFilePath = null
                                                 , Func<InstanceStore> onPersistProcessFunc = null
                                             )
         {
-            var workflow = GetOrAddWorkFlow
+            var definition = GetOrAddDefinition
                                 (
-                                    workFlowID
+                                    definitionID
                                     , () =>
                                     {
                                         var r = getDefinitionXamlProcessFunc();
                                         return r;
                                     }
                                 );
-            var activity = workflow.WorkFlowActivity;
+            var activity = definition.Activity;
             var workflowApplication = new WorkflowApplication(activity);
             if (onPersistProcessFunc != null)
             {
@@ -87,31 +75,20 @@ namespace Microshaoft
                 workflowApplication;
         }
 
-        public static
-                    (
-                        string WorkFlowID
-                        , Activity WorkFlowActivity
-                        , Type WorkFlowType
-                        , DateTime CompiledTime
-                    )
-                        GetOrAddWorkFlow
+        private static
+                    WorkFlowDefinition
+                        GetOrAddDefinition
                             (
-                                string workFlowID
+                                string definitionID
                                 , Func<string> getDefinitionXamlProcessFunc
                             )
         {
+            WorkFlowDefinition r = null;
             var cached = _cache
                             .TryGetValue
                                 (
-                                    workFlowID
-                                    , out
-                                        (
-                                            string WorkFlowID
-                                            , Activity WorkFlowActivity
-                                            , Type WorkFlowType
-                                            , DateTime CompiledTime
-                                        )
-                                            workFlow
+                                    definitionID
+                                    , out r
                                 );
             //if (!cached)
             {
@@ -126,40 +103,27 @@ namespace Microshaoft
                             () =>
                             {
                                 var xaml = getDefinitionXamlProcessFunc();
-                                (
-                                    string WorkFlowID
-                                    , Activity WorkFlowActivity
-                                    , Type WorkFlowType
-                                    , DateTime CompiledTime
-                                ) x = Compile(xaml);
+                                r = Compile(definitionID, xaml);
                                 cached = _cache
                                             .TryAdd
                                                 (
-                                                    workFlowID
-                                                    , x
+                                                    definitionID
+                                                    , r
                                                 );
-                                if (cached)
-                                {
-                                    workFlow = x;
-                                }
+
                             }
                         );
             }
             return
-                workFlow;
+                r;
         }
 
-         public static 
-                    (
-                        string WorkFlowID
-                        , Activity WorkFlowActivity
-                        , Type WorkFlowType
-                        , DateTime CompiledTime
-
-                    ) 
+        private static
+                    WorkFlowDefinition
                         Compile
                             (
-                                string xaml
+                                string definitionID
+                                , string xaml
                                 //, string localAssemblyFilePath = null
                             )
         {
@@ -197,12 +161,16 @@ namespace Microshaoft
                 CompileExpressions(type, activity);
             }
             return
-                (
-                     WorkFlowID         :   string.Empty
-                     , WorkFlowActivity :   activity
-                     , WorkFlowType     :   type
-                     , CompiledTime     :   DateTime.Now
-                );
+                new WorkFlowDefinition()
+                {
+                    ID = definitionID
+                     ,
+                    Activity = activity
+                     ,
+                    Type = type
+                     ,
+                    CompiledTime = DateTime.Now
+                };
         }
         private static bool TryGetCompiledResultType
                                     (
