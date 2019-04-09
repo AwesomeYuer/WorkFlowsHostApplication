@@ -102,6 +102,7 @@ namespace Microshaoft
                             ,
                             () =>
                             {
+                                
                                 var xaml = getDefinitionXamlProcessFunc();
                                 r = Compile(definitionID, xaml);
                                 cached = _cache
@@ -110,6 +111,7 @@ namespace Microshaoft
                                                     definitionID
                                                     , r
                                                 );
+                                Console.ReadLine();
 
                             }
                         );

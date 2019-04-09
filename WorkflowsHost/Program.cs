@@ -1,17 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Activities;
-using System.Activities.Statements;
-using Microshaoft;
-using System.Collections.Generic;
-using System.Threading;
-using System.Activities.Tracking;
-using System.Threading.Tasks;
-using System.IO;
-
-namespace WorkflowConsoleApplication
+﻿namespace WorkflowConsoleApplication
 {
-
+    using Microshaoft;
+    using System;
+    using System.Activities.Tracking;
+    using System.IO;
+    using System.Threading.Tasks;
     class Program
     {
         private static string _xaml = File.OpenText("WorkFlow1.xaml").ReadToEnd();
@@ -22,23 +15,23 @@ namespace WorkflowConsoleApplication
                     .For
                         (
                             1
-                            , 10
+                            , 1000
                             , new ParallelOptions()
                             {
-                                MaxDegreeOfParallelism = 1
+                                MaxDegreeOfParallelism = 16
                             }
                             , (x) =>
                             {
 
-                                try
-                                {
+                                //try
+                                //{
                                     ProcessOnce(x);
-                                }
-                                catch (Exception e)
-                                {
+                                //}
+                                //catch (Exception e)
+                                //{
 
-                                    Console.WriteLine(e);
-                                }
+                                //    Console.WriteLine(e);
+                                //}
                                
                             }
                         );
