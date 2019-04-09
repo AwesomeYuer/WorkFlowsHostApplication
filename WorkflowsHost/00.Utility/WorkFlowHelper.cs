@@ -90,19 +90,27 @@ namespace Microshaoft
                                     definitionID
                                     , out r
                                 );
-            //if (!cached)
+            if (!cached)
             {
                 _locker
                     .LockIf
                         (
                             () =>
                             {
-                                return !cached;
+                                return
+                                    (
+                                        !_cache
+                                            .TryGetValue
+                                                (
+                                                    definitionID
+                                                    , out r
+                                                )
+                                    );
                             }
                             ,
                             () =>
                             {
-                                
+                                Console.WriteLine($"Compile {definitionID}");
                                 var xaml = getDefinitionXamlProcessFunc();
                                 r = Compile(definitionID, xaml);
                                 cached = _cache
@@ -111,8 +119,6 @@ namespace Microshaoft
                                                     definitionID
                                                     , r
                                                 );
-                                Console.ReadLine();
-
                             }
                         );
             }

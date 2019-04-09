@@ -18,7 +18,7 @@
                             , 1000
                             , new ParallelOptions()
                             {
-                                MaxDegreeOfParallelism = 16
+                                MaxDegreeOfParallelism = Environment.ProcessorCount
                             }
                             , (x) =>
                             {
@@ -40,18 +40,10 @@
         }
         static void ProcessOnce(int i)
         {
-            Console.WriteLine(i);
-
-            //WorkflowApplication wfApp =
-            //    new WorkflowApplication(new FlowchartNumberGuessWorkflow(), inputs);
-
-            /*
-            xmlns:local=""clr-namespace:NumberGuessWorkflowActivities;assembly=NumberGuessWorkflowActivities""
-            */
             var wfApp = WorkFlowHelper
                             .CreateWorkflowApplication
                                 (
-                                    "aa"
+                                    "a:" + (i % 4).ToString()
                                     , () =>
                                     {
                                         return
@@ -61,7 +53,7 @@
 
             wfApp.Completed = (e) =>
             {
-                Console.WriteLine(e.InstanceId);
+                //Console.WriteLine(e.InstanceId);
             };
 
             wfApp.Aborted = (e) =>
