@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WorkFlows.WorkFlow1"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WorkFlows.WorkFlow1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="WorkFlows.WorkFlow1_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:a="clr-namespace:ActivityLibrary1;assembly=ActivityLibrary1"
  xmlns:a1="clr-namespace:ActivityLibrary2;assembly=ActivityLibrary2"
@@ -10,11 +10,6 @@
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <x:Members>
-    <x:Property Name="InstanceID" Type="InArgument(x:Int32)" />
-  </x:Members>
-  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap2010:WorkflowViewState.IdRef>WorkFlows.WorkFlow1_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -59,7 +54,7 @@
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>dz1EOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXFdvcmtGbG93MS54YW1sBSUDPw8CAQEoCShGAgEFKw0rYgIBBC4RLk8CAQMxFTFrAgEC</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1EOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXFdvcmtGbG93MS54YW1sBSADOg8CAQEjCSNGAgEFJg0mYgIBBCkRKU8CAQMsFSxrAgEC</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
