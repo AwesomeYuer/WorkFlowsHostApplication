@@ -1,14 +1,11 @@
-﻿
+﻿//#if NETFRAMEWORK4_X
 /*
-# Microshaoft
 /r:System.Xaml.dll
 /r:System.Activities.dll
 /r:System.Activities.DurableInstancing.dll
 /r:System.Runtime.DurableInstancing.dll
 /r:"D:\Microshaoft.Nuget.Packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll"
 */
-
-
 namespace Microshaoft
 {
     using Newtonsoft.Json.Linq;
@@ -37,7 +34,7 @@ namespace Microshaoft
         }
 
 
-        #region Member
+#region Member
         /// <summary>
         /// Compiled Expressions Type Cache
         /// </summary>
@@ -46,9 +43,9 @@ namespace Microshaoft
         /// Object for lock, make one Expressions Type only be compiled once
         /// </summary>
         private static object _locker = new object();
-        #endregion
+#endregion
 
-        public static WorkflowApplication CreateWorkflowApplication
+        public static WorkflowApplication CreateApplication
                                             (
                                                 string definitionID
                                                 , Func<string> getDefinitionXamlProcessFunc
@@ -132,7 +129,7 @@ namespace Microshaoft
                             (
                                 string definitionID
                                 , string xaml
-                                //, string localAssemblyFilePath = null
+                            //, string localAssemblyFilePath = null
                             )
         {
             var stringReader = new StringReader(xaml);
@@ -153,15 +150,15 @@ namespace Microshaoft
                                         (
                                             xamlReader
                                             , new ActivityXamlServicesSettings()
-                                                {
-                                                    CompileExpressions = true
-                                                }
+                                            {
+                                                CompileExpressions = true
+                                            }
                                         );
             if
                 (
                     TryGetCompiledResultType
                         (
-                            (DynamicActivity) activity
+                            (DynamicActivity)activity
                             , out var type
                         )
                 )
@@ -208,7 +205,7 @@ namespace Microshaoft
         {
             int index = dynamicActivity.Name.LastIndexOf('.');
             //int length = dynamicActivity.Name.Length;
-            string activityName = 
+            string activityName =
                         (
                             (index > 0)
                             ?
@@ -449,3 +446,4 @@ namespace Microshaoft
     }
 }
 
+//#endif

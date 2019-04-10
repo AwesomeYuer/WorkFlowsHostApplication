@@ -41,7 +41,7 @@
         static void ProcessOnce(int i)
         {
             var wfApp = WorkFlowHelper
-                            .CreateWorkflowApplication
+                            .CreateApplication
                                 (
                                     "a:" + (i % 4).ToString()
                                     , () =>
