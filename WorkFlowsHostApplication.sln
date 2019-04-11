@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkFlows", "WorkFlows\Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowsHostConsoleApplication", "WorkflowsHost\WorkflowsHostConsoleApplication.csproj", "{7B2465D8-14FB-4DE8-9D93-7090C5A01B77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityLibrary3", "ActivityLibrary3\ActivityLibrary3.csproj", "{422A3C7D-8555-4822-9204-AC598CA5C94F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,14 @@ Global
 		{7B2465D8-14FB-4DE8-9D93-7090C5A01B77}.Release|Any CPU.ActiveCfg = Release|x86
 		{7B2465D8-14FB-4DE8-9D93-7090C5A01B77}.Release|x86.ActiveCfg = Release|x86
 		{7B2465D8-14FB-4DE8-9D93-7090C5A01B77}.Release|x86.Build.0 = Release|x86
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Debug|x86.Build.0 = Debug|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Release|x86.ActiveCfg = Release|Any CPU
+		{422A3C7D-8555-4822-9204-AC598CA5C94F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +71,7 @@ Global
 		{346F936A-D530-4899-9A81-D6A7F7748122} = {AC5F1BE0-23F2-4982-96E7-EC3C58EED0CE}
 		{B1661242-0CE2-4C22-8D9C-C701D8D499CC} = {AC5F1BE0-23F2-4982-96E7-EC3C58EED0CE}
 		{946414AE-CC8F-4434-BBC2-D09B9C64FF00} = {B3425A7F-762B-4F53-B768-78F159CCE798}
+		{422A3C7D-8555-4822-9204-AC598CA5C94F} = {AC5F1BE0-23F2-4982-96E7-EC3C58EED0CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D20A020A-4D97-4EDA-A7FA-76E5CCF1EB04}
