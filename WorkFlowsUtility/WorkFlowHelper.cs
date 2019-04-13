@@ -49,7 +49,7 @@ namespace Microshaoft
                                             (
                                                 string definitionID
                                                 , Func<string> getDefinitionXamlProcessFunc
-                                                //, IDictionary<string, object> inputs = null
+                                                , IDictionary<string, object> inputs = null
                                                 , Func<InstanceStore> onPersistProcessFunc = null
                                             )
         {
@@ -64,8 +64,17 @@ namespace Microshaoft
                                 );
             var dynamicActivity = definition.DynamicActivity;
 
+            WorkflowApplication workflowApplication = null;
+            if (inputs == null)
+            {
+                workflowApplication = new WorkflowApplication(dynamicActivity);
+            }
+            else
+            {
+                workflowApplication = new WorkflowApplication(dynamicActivity, inputs);
+            }
 
-            var workflowApplication = new WorkflowApplication(dynamicActivity);
+            
             if (onPersistProcessFunc != null)
             {
                 workflowApplication.InstanceStore = onPersistProcessFunc();

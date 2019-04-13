@@ -1,6 +1,7 @@
 ﻿namespace WorkflowConsoleApplication
 {
     using Microshaoft;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Activities;
     using System.Activities.Tracking;
@@ -10,12 +11,20 @@
     using System.Threading.Tasks;
     class Program
     {
-        private static string _xaml = File.OpenText("WorkFlow2.xaml").ReadToEnd();
+        private static string _xaml = File.OpenText("DynamicJsonIoWorkFlow.xaml").ReadToEnd();
 
         static void Main()
         {
-            AutoResetEvent syncEvent = new AutoResetEvent(false);
-            AutoResetEvent idleEvent = new AutoResetEvent(false);
+            
+
+
+            DynamicJson dj = DynamicJson.Parse("{\"F1\":10}");
+
+            var xx = dj["F1"].GetValue<int>();
+            var inputs = new Dictionary<string, object>()
+            {
+                { "Inputs", dj}
+            };
 
             var wfApp = WorkFlowHelper
                                 .CreateApplication
@@ -26,14 +35,14 @@
                                             return
                                                 _xaml;
                                         }
-                                        //, inputs
+                                        , inputs
                                     );
             wfApp.Completed = (e) =>
             {
-                int Turns = Convert.ToInt32(e.Outputs["Turns"]);
-                Console.WriteLine("Congratulations, you guessed the number in {0} turns.", Turns);
+                //int Turns = Convert.ToInt32(e.Outputs["Turns"]);
+                //Console.WriteLine("Congratulations, you guessed the number in {0} turns.", Turns);
 
-                syncEvent.Set();
+                //syncEvent.Set();
             };
 
             wfApp.Aborted = (e) =>
@@ -52,6 +61,11 @@
             {
                 idleEvent.Set();
             };
+
+            wfApp.Run();
+
+            Console.ReadLine();
+            return;
 
 
             var config = @"{
@@ -132,33 +146,35 @@
 
             wfApp.Run();
 
-            // Loop until the workflow completes.
-            WaitHandle[] handles = new WaitHandle[] { syncEvent, idleEvent };
-            while (WaitHandle.WaitAny(handles) != 0)
-            {
-                // Gather the user input and resume the bookmark.
-                bool validEntry = false;
-                while (!validEntry)
-                {
-                    int Guess;
-                    if (!int.TryParse(Console.ReadLine(), out Guess))
-                    {
-                        Console.WriteLine("Please enter an integer.");
-                    }
-                    else
-                    {
-                        validEntry = true;
-                        wfApp.ResumeBookmark("EnterGuess", Guess);
-                    }
-                }
-            }
+            Console.ReadLine();
+
+            //// Loop until the workflow completes.
+            //WaitHandle[] handles = new WaitHandle[] { syncEvent, idleEvent };
+            //while (WaitHandle.WaitAny(handles) != 0)
+            //{
+            //    // Gather the user input and resume the bookmark.
+            //    bool validEntry = false;
+            //    while (!validEntry)
+            //    {
+            //        int Guess;
+            //        if (!int.TryParse(Console.ReadLine(), out Guess))
+            //        {
+            //            Console.WriteLine("Please enter an integer.");
+            //        }
+            //        else
+            //        {
+            //            validEntry = true;
+            //            wfApp.ResumeBookmark("EnterGuess", Guess);
+            //        }
+            //    }
+            //}
 
 
 
         }
 
 
-        static void Main111(string[] args)
+        static void Main1111(string[] args)
         {
             //ProcessOnce(1);
             //Console.ReadLine();
