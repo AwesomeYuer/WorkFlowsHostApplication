@@ -13,17 +13,28 @@ namespace JsonActivitiesLibrary
     {
         public override DynamicJson ExecuteProcess(NativeActivityContext context)
         {
-            DynamicJson parameter = Inputs.Get(context);
-
-            if (parameter.IsDefined("Steps"))
+            dynamic parameter = Inputs.Get(context);
+            var i = -1;
+            if (!parameter.IsDefined("RunningCount"))
             {
-                parameter["Steps"]
+                i = parameter.RunningCount = 0;
             }
             else
             {
-
+                i = parameter.RunningCount += 1;
             }
-
+            if (!parameter.IsDefined("Arr"))
+            {
+                parameter.Arr = new[] { new { Text = $"run{i}" } };
+            }
+            else
+            {
+                parameter.Arr.Add(new { Text = $"run{i}" });
+            }
+            
+            
+            parameter.Arr[i].F2 = $"F22222222222@{i}";
+            Console.WriteLine(parameter.Arr.Count());
 
             //JArray steps = null; 
             //if (parameter["Steps"] == null)

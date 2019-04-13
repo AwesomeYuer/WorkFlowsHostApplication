@@ -48,7 +48,7 @@
             wfApp.Aborted = (e) =>
             {
                 Console.WriteLine(e.Reason);
-                syncEvent.Set();
+                //syncEvent.Set();
             };
 
             wfApp.OnUnhandledException = (e) =>
@@ -59,7 +59,7 @@
 
             wfApp.Idle = (e) =>
             {
-                idleEvent.Set();
+                //idleEvent.Set();
             };
 
             wfApp.Run();

@@ -35,6 +35,7 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>PresentationCore</AssemblyReference>
       <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
@@ -51,7 +52,6 @@
       <AssemblyReference>ActivityLibrary1</AssemblyReference>
       <AssemblyReference>ActivityLibrary2</AssemblyReference>
       <AssemblyReference>ActivityLibrary3</AssemblyReference>
-      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>JsonActivitiesLibrary</AssemblyReference>
       <AssemblyReference>WorkFlowsUtility</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -69,23 +69,42 @@
           </j:DynamicJsonIoActivity1.Inputs>
         </j:DynamicJsonIoActivity1>
         <FlowStep.Next>
-          <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_4">
-            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
-              <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String">Inputs["F1"].GetValue&lt;int&gt;().ToString()</mca:CSharpValue>
-              </InArgument>
-            </WriteLine>
+          <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+            <j:DynamicJsonIoActivity1 sap2010:WorkflowViewState.IdRef="DynamicJsonIoActivity1_2">
+              <j:DynamicJsonIoActivity1.Inputs>
+                <InArgument x:TypeArguments="m:DynamicJson">
+                  <mca:CSharpValue x:TypeArguments="m:DynamicJson">Inputs</mca:CSharpValue>
+                </InArgument>
+              </j:DynamicJsonIoActivity1.Inputs>
+            </j:DynamicJsonIoActivity1>
+            <FlowStep.Next>
+              <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
+                  <InArgument x:TypeArguments="x:String">
+                    <mca:CSharpValue x:TypeArguments="x:String">Inputs["Arr"][Inputs["RunningCount"].GetValue&lt;int&gt;()]["Text"].GetValue&lt;string&gt;()</mca:CSharpValue>
+                  </InArgument>
+                </WriteLine>
+              </FlowStep>
+            </FlowStep.Next>
           </FlowStep>
         </FlowStep.Next>
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
-    <sads:DebugSymbol.Symbol>d0lEOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXER5bmFtaWNKc29uSW9Xb3JrRmxvdy54YW1sBhQHFE4BAj0DVQ8CAQFACUYkAgEFSQ1NGQIBAkMPQ1gCAQZLEUt8AgED</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <sads:DebugSymbol.Symbol>d0lEOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXER5bmFtaWNKc29uSW9Xb3JrRmxvdy54YW1sCBQHFE4BAj0DYQ8CAQFACUYkAgEISQ1PKAIBBVIRVh0CAQJDD0NYAgEJTBNMXAIBBlQVVK8BAgED</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="DynamicJsonIoActivity1_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="DynamicJsonIoActivity1_2" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -102,8 +121,17 @@
       <sap2010:ViewStateData Id="FlowStep_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">285.333333333333,198.666666666667</av:Point>
+            <av:Point x:Key="ShapeLocation">265.333333333333,308.666666666667</av:Point>
             <av:Size x:Key="ShapeSize">209.333333333333,62.6666666666667</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">120,209</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">220,231 220,261 370,261 370,308.666666666667</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -112,7 +140,7 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">300,130</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">400,152 400,182 390,182 390,198.666666666667</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">400,152 400,182 220,182 220,209</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
