@@ -71,10 +71,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WorkFlow2.xaml">
-      <SubType>Designer</SubType>
+    <XamlAppDef Include="WorkFlow2.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

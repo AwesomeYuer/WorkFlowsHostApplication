@@ -56,7 +56,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)WorkflowConsoleApplication\$(OutDir) /Y
+    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)WorkflowsHost\$(OutDir) /Y
 xcopy $(TargetPath) $(SolutionDir)WorkFlows\$(OutDir) /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

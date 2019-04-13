@@ -29,6 +29,8 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
@@ -39,23 +41,21 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>ActivityLibrary1</AssemblyReference>
       <AssemblyReference>ActivityLibrary2</AssemblyReference>
       <AssemblyReference>ActivityLibrary3</AssemblyReference>
-      <AssemblyReference>WindowsBase</AssemblyReference>
-      <AssemblyReference>PresentationCore</AssemblyReference>
-      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WorkFlows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="Guess" />
       <Variable x:TypeArguments="x:Int32" Name="Target" />
+      <Variable x:TypeArguments="x:Int32" Name="Guess" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
         <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
           <Assign.To>
             <OutArgument x:TypeArguments="x:Int32">
@@ -69,21 +69,16 @@
           </Assign.Value>
         </Assign>
         <FlowStep.Next>
-          <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_4">
-            <a:Prompt BookmarkName="EnterGuess" sap2010:WorkflowViewState.IdRef="Prompt_1">
+          <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+            <a:Prompt BookmarkName="EnterGuess" sap2010:WorkflowViewState.IdRef="Prompt_1" Text="请输入">
               <a:Prompt.Result>
                 <OutArgument x:TypeArguments="x:Int32">
                   <mca:CSharpReference x:TypeArguments="x:Int32">Guess</mca:CSharpReference>
                 </OutArgument>
               </a:Prompt.Result>
-              <a:Prompt.Text>
-                <InArgument x:TypeArguments="x:String">
-                  <mca:CSharpValue x:TypeArguments="x:String">"Please enter a number between 1 and " + MaxNumber</mca:CSharpValue>
-                </InArgument>
-              </a:Prompt.Text>
             </a:Prompt>
             <FlowStep.Next>
-              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_5">
                 <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
                   <Assign.To>
                     <OutArgument x:TypeArguments="x:Int32">
@@ -107,16 +102,24 @@
                           <mca:CSharpValue x:TypeArguments="x:Boolean">Guess &lt; Target</mca:CSharpValue>
                         </FlowDecision.Condition>
                         <FlowDecision.True>
-                          <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_1">
-                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="Your guess is too low." />
+                          <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
+                              <InArgument x:TypeArguments="x:String">
+                                <mca:CSharpValue x:TypeArguments="x:String">"小了" + Turns.ToString()</mca:CSharpValue>
+                              </InArgument>
+                            </WriteLine>
                             <FlowStep.Next>
                               <x:Reference>__ReferenceID0</x:Reference>
                             </FlowStep.Next>
                           </FlowStep>
                         </FlowDecision.True>
                         <FlowDecision.False>
-                          <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_2">
-                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="Your guess is too high." />
+                          <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2">
+                              <InArgument x:TypeArguments="x:String">
+                                <mca:CSharpValue x:TypeArguments="x:String">"大了" + Turns.ToString()</mca:CSharpValue>
+                              </InArgument>
+                            </WriteLine>
                             <FlowStep.Next>
                               <x:Reference>__ReferenceID0</x:Reference>
                             </FlowStep.Next>
@@ -139,7 +142,7 @@
     <x:Reference>__ReferenceID4</x:Reference>
     <x:Reference>__ReferenceID5</x:Reference>
     <x:Reference>__ReferenceID6</x:Reference>
-    <sads:DebugSymbol.Symbol>dz1EOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXFdvcmtGbG93Mi54YW1sEgFiAWYBAjQDjwEPAgEBOwlGEgIBJ0kNVBgCARtXEWIaAgEQZhdmZQIBC2sba2sCAQZ3HXd3AgEEbx1vdgIBAkMPQ3YCAS0+Dz5aAgEoSSRJMAIBJlETUYMBAgEhTBNMXQIBHF8XX10CARZaF1phAgERd1t3dAIBBW9bb3MCAQM=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dz1EOlxNeUdpdEh1YlxXb3JrRmxvd3NIb3N0QXBwbGljYXRpb25cV29ya0Zsb3dzXFdvcmtGbG93Mi54YW1sEgFiAWYBAjQDkgEPAgEBOwlGEgIBK0kNTxgCASNSEV0aAgEYYRdhZQIBE2YbZmsCAQ52HXopAgEIah1uKQIBAkMPQ3YCATE+Dz5aAgEsSSRJMAIBKklhSWYCASlME0xdAgEkWhdaXQIBHlUXVWECARl4IXh2AgEJbCFsdgIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -171,12 +174,12 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_1">
+      <sap2010:ViewStateData Id="FlowStep_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">94.5,589</av:Point>
+            <av:Point x:Key="ShapeLocation">85.3333333333333,628.666666666667</av:Point>
             <av:Size x:Key="ShapeSize">209.333333333333,62.6666666666667</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">94.5,620 64.5,620 64.5,250.5 199.895,250.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">190,691.333333333334 190,721.333333333334 70,721.333333333334 70,230 180,230</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -187,12 +190,12 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_2">
+      <sap2010:ViewStateData Id="FlowStep_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">354.5,599</av:Point>
+            <av:Point x:Key="ShapeLocation">335.333333333333,638.666666666667</av:Point>
             <av:Size x:Key="ShapeSize">209.333333333333,62.6666666666667</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">563.833333333333,630.333333333333 593.833333333333,630.333333333333 593.833333333333,250.5 399.895,250.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">544.666666666667,670 574.666666666667,670 574.666666666667,230 380,230</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -200,10 +203,10 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">355,496.5</av:Point>
+            <av:Point x:Key="ShapeLocation">325,526.666666666667</av:Point>
             <av:Size x:Key="ShapeSize">70,86.6666666666667</av:Size>
-            <av:PointCollection x:Key="TrueConnector">355,540 200,540 200,589</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">425,540 460,540 460,599</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">325,570 190,570 190,628.666666666667</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">395,570 440,570 440,638.666666666667</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -211,51 +214,52 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">264.895,423.5</av:Point>
+            <av:Point x:Key="ShapeLocation">255,416.5</av:Point>
             <av:Size x:Key="ShapeSize">70,86.6666666666667</av:Size>
-            <av:PointCollection x:Key="FalseConnector">334.895,467 390,467 390,496.5</av:PointCollection>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_3">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">178.895,311.5</av:Point>
-            <av:Size x:Key="ShapeSize">242,62.6666666666667</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">299.895,373.5 299.895,423.5</av:PointCollection>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_4">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">199.895,239.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">299.895,261.5 299.895,311.5</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">325,459.833333333333 360,459.833333333333 360,526.666666666667</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">178.895,127.5</av:Point>
+            <av:Point x:Key="ShapeLocation">169,328.666666666667</av:Point>
             <av:Size x:Key="ShapeSize">242,62.6666666666667</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">299.895,189.5 299.895,239.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">290,391.333333333333 290,416.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614,698.666666666667">
+      <sap2010:ViewStateData Id="FlowStep_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">180,219</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">280,241 280,271 290,271 290,328.666666666667</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">178.895,109.01953125</av:Point>
+            <av:Size x:Key="ShapeSize">242,62.6666666666667</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">299.895,171.686197916667 299.895,201.686197916667 280,201.686197916667 280,219</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="618.666666666667,42858">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 299.895,107.5 299.895,127.5</av:PointCollection>
-            <x:Double x:Key="Height">662.33333333333337</x:Double>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.1666666666667 300,107.166666666667 299.895,107.166666666667 299.895,109.01953125</av:PointCollection>
+            <x:Double x:Key="Height">42821.686197916664</x:Double>
+            <x:Double x:Key="Width">604.66666666666663</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WorkFlows.WorkFlow2_1" sap:VirtualizedContainerService.HintSize="654,778.666666666667" />
+      <sap2010:ViewStateData Id="WorkFlows.WorkFlow2_1" sap:VirtualizedContainerService.HintSize="658.666666666667,42938" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

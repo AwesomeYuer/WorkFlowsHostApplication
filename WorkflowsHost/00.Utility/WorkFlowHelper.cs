@@ -27,7 +27,7 @@ namespace Microshaoft
         private class WorkFlowDefinition
         {
             public string ID;
-            public Activity Activity;
+            public DynamicActivity DynamicActivity;
             public Type Type;
             public DateTime CompiledTime;
 
@@ -49,7 +49,7 @@ namespace Microshaoft
                                             (
                                                 string definitionID
                                                 , Func<string> getDefinitionXamlProcessFunc
-                                                //, string localAssemblyFilePath = null
+                                                //, IDictionary<string, object> inputs = null
                                                 , Func<InstanceStore> onPersistProcessFunc = null
                                             )
         {
@@ -62,8 +62,10 @@ namespace Microshaoft
                                         return r;
                                     }
                                 );
-            var activity = definition.Activity;
-            var workflowApplication = new WorkflowApplication(activity);
+            var dynamicActivity = definition.DynamicActivity;
+
+
+            var workflowApplication = new WorkflowApplication(dynamicActivity);
             if (onPersistProcessFunc != null)
             {
                 workflowApplication.InstanceStore = onPersistProcessFunc();
@@ -154,25 +156,25 @@ namespace Microshaoft
                                                 CompileExpressions = true
                                             }
                                         );
-            if
+            DynamicActivity dynamicActivity = (DynamicActivity) activity;
+            var got = TryGetCompiledResultType
                 (
-                    TryGetCompiledResultType
-                        (
-                            (DynamicActivity)activity
-                            , out var type
-                        )
-                )
+                    dynamicActivity
+                    , out var compiledResultType
+                );
+            if (got)
             {
-                CompileExpressions(type, activity);
+                AttachNewInstance(compiledResultType, dynamicActivity);
+
             }
             return
                 new WorkFlowDefinition()
                 {
                     ID = definitionID
                      ,
-                    Activity = activity
+                     DynamicActivity = dynamicActivity
                      ,
-                    Type = type
+                    Type = compiledResultType
                      ,
                     CompiledTime = DateTime.Now
                 };
@@ -193,7 +195,11 @@ namespace Microshaoft
             {
                 type = results
                             .ResultType;
-                r = (type != null);
+                r = (type == null);
+            }
+            if (r)
+            {
+                throw new Exception("Compilation failed.");
             }
             return r;
         }
@@ -203,62 +209,52 @@ namespace Microshaoft
                                                     DynamicActivity dynamicActivity
                                                 )
         {
-            int index = dynamicActivity.Name.LastIndexOf('.');
-            //int length = dynamicActivity.Name.Length;
-            string activityName =
-                        (
-                            (index > 0)
-                            ?
-                            dynamicActivity.Name.Substring(index + 1)
-                            :
-                            dynamicActivity.Name
-                        );
-            activityName += "_CompiledExpressionRoot";
-            string activityNamespace =
-                        (
-                            (index > 0)
-                            ?
-                            dynamicActivity.Name.Substring(0, index)
-                            :
-                            null
-                        );
+            // activityName is the Namespace.Type of the activity that contains the
+            // C# expressions. For Dynamic Activities this can be retrieved using the
+            // name property , which must be in the form Namespace.Type.
+            string activityName = dynamicActivity.Name;
+
+            // Split activityName into Namespace and Type.Append _CompiledExpressionRoot to the type name
+            // to represent the new type that represents the compiled expressions.
+            // Take everything after the last . for the type name.
+            string activityType = activityName.Split('.').Last() + "_CompiledExpressionRoot";
+            // Take everything before the last . for the namespace.
+            string activityNamespace = string.Join(".", activityName.Split('.').Reverse().Skip(1).Reverse());
             return
                 new TextExpressionCompilerSettings
                 {
-                    Activity = dynamicActivity
-                        ,
-                    ActivityName = activityName
-                        ,
-                    ActivityNamespace = activityNamespace
-                        ,
-                    RootNamespace = null
-                        ,
-                    GenerateAsPartialClass = false
-                        ,
-                    AlwaysGenerateSource = true //if false,sometime return null type after compile
-                        ,
-                    Language = "C#"
+                    Activity = dynamicActivity,
+                    Language = "C#",
+                    ActivityName = activityType,
+                    ActivityNamespace = activityNamespace,
+                    RootNamespace = null,
+                    GenerateAsPartialClass = false,
+                    AlwaysGenerateSource = true,
+                    ForImplementation = true
                 };
         }
-        private static void CompileExpressions(Type type, Activity activity)
+        private static void AttachNewInstance(Type compiledResultType, DynamicActivity dynamicActivity)
         {
+            // Create an instance of the new compiled expression type.
             ICompiledExpressionRoot
                 compiledExpressionRoot =
                     Activator
                         .CreateInstance
                             (
-                                type
+                                compiledResultType
                                 , new object[]
                                     {
-                                        activity
+                                        dynamicActivity
                                     }
                             ) as ICompiledExpressionRoot;
+            // Attach it to the activity.
             CompiledExpressionInvoker
                 .SetCompiledExpressionRootForImplementation
                     (
-                        activity
+                        dynamicActivity
                         , compiledExpressionRoot
                     );
+
         }
         public static TrackingProfile GetTrackingProfileFromJson
             (
