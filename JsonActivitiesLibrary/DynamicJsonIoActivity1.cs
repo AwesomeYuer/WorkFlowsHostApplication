@@ -6,12 +6,12 @@ using System.Activities;
 using Newtonsoft.Json.Linq;
 using Microshaoft;
 
-namespace JsonActivitiesLibrary
+namespace Microshaoft
 {
 
     public sealed class DynamicJsonIoActivity1 : AbstractDynamicJsonIoActivity
     {
-        public override DynamicJson ExecuteProcess(NativeActivityContext context)
+        public override DynamicJson OnExecuteProcess(NativeActivityContext context)
         {
             dynamic parameter = Inputs.Get(context);
             var i = -1;
@@ -31,26 +31,9 @@ namespace JsonActivitiesLibrary
             {
                 parameter.Arr.Add(new { Text = $"run{i}" });
             }
-            
-            
             parameter.Arr[i].F2 = $"F22222222222@{i}";
             Console.WriteLine(parameter.Arr.Count());
 
-            //JArray steps = null; 
-            //if (parameter["Steps"] == null)
-            //{
-            //    steps = new JArray();
-            //    parameter["Steps"] = steps;
-            //}
-            //else
-            //{
-            //    steps = (JArray)parameter["Steps"];
-            //}
-            //steps
-            //    .Add
-            //        (
-            //            $"Execute:{this.GetType().Name}@{DateTime.Now}"
-            //        );
             return parameter;
         }
 

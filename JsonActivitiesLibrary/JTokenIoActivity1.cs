@@ -6,7 +6,7 @@ using System.Activities;
 using Newtonsoft.Json.Linq;
 using Microshaoft;
 
-namespace JsonActivitiesLibrary
+namespace Microshaoft
 {
 
     public sealed class JTokenIoActivity1 : AbstractJTokenIoActivity

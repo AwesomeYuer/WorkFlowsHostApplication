@@ -1,6 +1,4 @@
-﻿
-
-namespace JsonActivitiesLibrary
+﻿namespace Microshaoft
 {
     using System;
     using System.Collections.Generic;
@@ -8,14 +6,14 @@ namespace JsonActivitiesLibrary
     using System.Text;
     using System.Activities;
     using Newtonsoft.Json.Linq;
-    using Microshaoft;
+    
 
     public abstract class AbstractDynamicJsonIoActivity : NativeActivity<DynamicJson>
     {
         [RequiredArgument]
         public InArgument<DynamicJson> Inputs { get; set; }
 
-        public abstract DynamicJson ExecuteProcess(NativeActivityContext context);
+        public abstract DynamicJson OnExecuteProcess(NativeActivityContext context);
         
 
         protected override void Execute(NativeActivityContext context)
@@ -29,7 +27,8 @@ namespace JsonActivitiesLibrary
             {
                 var hasBookmark = parameter
                                     .IsDefined("bookmark");
-                       
+                
+
                 if (hasBookmark)
                 {
                     var bookmarkName = parameter["bookmark"].GetValue<string>();
@@ -55,7 +54,7 @@ namespace JsonActivitiesLibrary
                 }
                 else
                 {
-                    var result = ExecuteProcess(context);
+                    var result = OnExecuteProcess(context);
                     Result
                        .Set
                            (

@@ -1,6 +1,6 @@
 ﻿
 
-namespace JsonActivitiesLibrary
+namespace Microshaoft
 {
     using System;
     using System.Collections.Generic;

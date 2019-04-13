@@ -52,7 +52,7 @@
     <Compile Include="JTokenIoActivity1.cs" />
     <Compile Include="DynamicJsonIoActivity1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AbstractJsonIoActivity.cs" />
+    <Compile Include="AbstractDynamicJsonIoActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <XamlAppDef Include="InputPrompt.xaml">
